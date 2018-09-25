@@ -28,7 +28,7 @@ package ubiksimdist;
 import sim.app.ubik.Ubik;
 import sim.app.ubik.behaviors.Automaton;
 import sim.app.ubik.people.PersonHandler;
-import sim.app.ubik.people.Worker;
+import sim.app.ubik.people.WorkerRaw;
 
 
 /**
@@ -43,7 +43,7 @@ public class SimExample extends Ubik {
     public void setGlobalTargetDemo1(int val) {       
         this.globalTargetDemo1 = val;
         String[]  s= {"Exit1", "Exit2", "Exit3", "Exit4"};
-        Worker.setGlobalGoal(s[val]);
+        WorkerRaw.setGlobalGoal(s[val]);
     }
 
     public int getGlobalTargetDemo1() {
