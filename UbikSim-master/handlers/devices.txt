@@ -1,0 +1,15 @@
+AirCond
+AndroidMobile
+DoorSensor
+Mobile
+PC
+PresenceSensor
+PressureSensor
+RFIDAntenna
+RFIDTag
+RQTag
+SlaveBluetooth
+TV
+TV unit
+Thermometer
+Actuator
