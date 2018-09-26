@@ -33,6 +33,7 @@ import sim.app.ubik.Ubik;
 import sim.app.ubik.building.SpaceArea;
 import sim.app.ubik.building.connectionSpace.ConnectionSpaceInABuilding;
 import sim.app.ubik.furniture.Furniture;
+import ubik3d.model.Home;
 
 /**
  * Las habitaciones grandes (entre pasillos) también estan numeradas con x e y.  
@@ -41,6 +42,7 @@ public class Room extends SpaceArea {
 
     protected List<ConnectionSpaceInABuilding> doors;
     protected List<Furniture> furniture;
+    
 
     public Room(int floor, String name, Ubik ubik, float[][] pos) {
         super(floor, name, ubik, pos);
@@ -125,5 +127,9 @@ public class Room extends SpaceArea {
 
     public List<Furniture> getFurniture() {
         return furniture;
+    }
+    
+    public List<Room> getRooms(){
+        return getRooms();
     }
 }

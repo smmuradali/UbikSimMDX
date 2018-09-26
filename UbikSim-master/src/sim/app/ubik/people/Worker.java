@@ -278,7 +278,8 @@ public class Worker extends Person{
                     }
                 }
             }
-//           System.out.println( "index# "+ i + "get name " + sa.get(i).getName()+ "id " +sa.get(i).getId());
+        //   System.out.println( "index# "+ i + "get name " + sa.get(i).getName()+ "id " +sa.get(i).getId());
+          
                    
        }
     
@@ -358,18 +359,21 @@ public class Worker extends Person{
 //                // do something
 //            }  
             //this.person3DModel.setVisible(false);
+             
                List<Furniture> furnitures = (List<Furniture>) ubik.getBuilding().getFloor(floor).getFurnitureHandler().getFurnitures();
             for(int i=0;i<furnitures.size();i++){
            //System.out.println(furnitures.get(i).getName() + " + " + "index# "+ i + "(" + furnitures.get(i).getCenter().x + "," + furnitures.get(i).getCenter().y +")");
 //            furnitures.get(i).getFurniture3DModel().setColor(Color.RED.getRGB());          
        }
-                   
+               
+            
 
               //Kettle (19) position
               MutableInt2D kettlePosition = new MutableInt2D(15, 37);
                 if(this.getPosition().equals( kettlePosition)){
                 //    System.out.println("not ok " + this.getPosition()); 
                     furnitures.get(2).getFurniture3DModel().setColor(Color.GREEN.getRGB());
+                ubik.getBuilding().getFloor(floor).getHome().getRooms().get(3).setFloorColor(Color.LIGHT_GRAY.getRGB());
                     String query = "insert into measure values(default,2," + furnitures.get(2).getFurniture3DModel().getName() + ",0,1,'" + dateTime + "');";
                     System.out.println(query);
                     database.executeUpdate(query);

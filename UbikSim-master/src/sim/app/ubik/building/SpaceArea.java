@@ -39,6 +39,7 @@ import sim.app.ubik.utils.ElementsHandler;
 import sim.field.grid.SparseGrid2D;
 import sim.util.Double2D;
 import sim.util.Int2D;
+import ubik3d.model.Room;
 
 
 public abstract class SpaceArea {
@@ -54,7 +55,7 @@ public abstract class SpaceArea {
     protected Shape shapeCache;     //silueta de la habitacion
     protected Int2D centerCache; // Centro de del cuadrado que abarca la silueta
     protected ElementsHandler elementsHandler;
-    
+     protected Room room;
     // Puntos de la habitacion para poder desplazarse por esta en línea recta
     // sin toparse. Se usan para generar el grafo del edificio.
     protected List<NodeGraph> centers;
@@ -238,6 +239,8 @@ public abstract class SpaceArea {
     public int getFloor() {
     	return floor;
     }
+    
+    
     
     public abstract void add(ConnectionSpaceInABuilding d);
 
