@@ -158,8 +158,8 @@ abstract public class Person extends Observable implements Steppable, Stoppable,
 
     @Override
     public void stop() {
-        person3DModel.setVisible(false);
-        ubik.getBuilding().getFloor(floor).getPersonHandler().remove(this);
+        person3DModel.setVisible(true);
+        //ubik.getBuilding().getFloor(floor).getPersonHandler().remove(this);
         if (stoppable != null) {
             stopped = true;
             stoppable.stop();   

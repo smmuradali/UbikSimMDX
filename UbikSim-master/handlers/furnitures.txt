@@ -1,4 +1,6 @@
 Bed
 Chair
-Stairs
 Door
+LightSwitch
+Stairs
+Light

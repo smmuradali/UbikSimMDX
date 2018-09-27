@@ -48,7 +48,7 @@ import ubik3d.model.Home;
  * @author SA2305
  */
 public class Worker extends Person{
-    private static final Logger LOG = Logger.getLogger(Worker.class.getName());
+    private static final Logger LOG = Logger.getLogger(WorkerLight.class.getName());
     private static String globalGoal=null; //goal for all agents     
    //rivate static String exits[] = {"Exit1", "Exit2", "Exit3", "Exit4"}; //list of poosible goals
     private static String rooms[] = {"room1", "room2", "room3", "room4","room5","room6","room7","room8","room9"};
@@ -104,23 +104,33 @@ public class Worker extends Person{
                 if (cs instanceof Door) {
                     Door door = (Door) cs;
                    // System.out.println("cellsize  " + cs.getCenter().distance(new Int2D(x,y))*ubik.getCellSize() + cs.getName());
-                    if (cs.getCenter().distance(new Int2D(x,y))*ubik.getCellSize() < 90) {
+                    if (cs.getCenter().distance(new Int2D(x,y))*ubik.getCellSize() < 70) {
                         if (door.isOpened()) {
                             //System.out.printf("Door name (Door Open)", door.getName());
                             //System.out.println("Door open");
-                            door.close();
-                            //door.getModel().setVisible(false);
-                            
                             String query = "insert into measure values(default,2," + door.getName() + ",1,0,'" + dateTime + "');";
                             System.out.println(query);
-                            database.executeUpdate(query);                  
+                            database.executeUpdate(query);
+                            door.close();
+                            query = "insert into measure values(default,2," + door.getName() + ",0,1,'" + dateTime + "');";
+                            System.out.println(query);
+                            database.executeUpdate(query);
+                            //door.getModel().setVisible(false);
+                            
+                            //String query = "insert into measure values(default,2," + door.getName() + ",1,0,'" + dateTime + "');";
+//                            System.out.println(query);
+//                            database.executeUpdate(query);                  
                         } else {
                             door.open();
                            // System.out.printf("Door name (Door Close)", door.getName());
                            
                             String query = "insert into measure values(default,2," + door.getName()+ ",0,1,'" + dateTime + "');";
                             System.out.println(query);
-                            database.executeUpdate(query);                            
+                            database.executeUpdate(query);      
+                            door.close();
+                            query = "insert into measure values(default,2," + door.getName()+ ",1,0,'" + dateTime + "');";
+                            System.out.println(query);
+                            database.executeUpdate(query); 
                         }
                     }
                 }else{
@@ -366,138 +376,39 @@ public class Worker extends Person{
 //            furnitures.get(i).getFurniture3DModel().setColor(Color.RED.getRGB());          
        }
                
+            //BedRoom become dark
+            MutableInt2D BedroomLight = new MutableInt2D(31, 15);
+            if(this.getPosition().equals(BedroomLight)){
+                ubik.getBuilding().getFloor(floor).getHome().getRooms().get(0).setFloorColor(Color.BLACK.getRGB());
+                String query = "insert into measure values(default,2," + furnitures.get(38).getFurniture3DModel().getName() + ",1,0,'" + dateTime + "');";
+                System.out.println(query);
+                database.executeUpdate(query);
+                System.out.println("BedRoom Light turn off");
+            }
+            //Kitchen become dark
+            MutableInt2D  KitchenLight = new MutableInt2D(14, 25);
+            if(this.getPosition().equals(KitchenLight)){
+                ubik.getBuilding().getFloor(floor).getHome().getRooms().get(3).setFloorColor(Color.BLACK.getRGB());
+                String query = "insert into measure values(default,2," + furnitures.get(34).getFurniture3DModel().getName() + ",1,0,'" + dateTime + "');";
+                System.out.println(query);
+                database.executeUpdate(query);
+                System.out.println("Kitchen Light turn off");
             
+            }
+            
+            //CorridorLight become dark
+            MutableInt2D  CorridorLight = new MutableInt2D(27, 25);
+            if(this.getPosition().equals(CorridorLight)){
+                ubik.getBuilding().getFloor(floor).getHome().getRooms().get(8).setFloorColor(Color.BLACK.getRGB());
+                ubik.getBuilding().getFloor(floor).getHome().getRooms().get(9).setFloorColor(Color.BLACK.getRGB());
+                String query = "insert into measure values(default,2," + furnitures.get(35).getFurniture3DModel().getName() + ",1,0,'" + dateTime + "');";
+                System.out.println(query);
+                database.executeUpdate(query);
+                System.out.println("Corridor Light turn off");
+            
+            }
 
-              //Kettle (19) position
-              MutableInt2D kettlePosition = new MutableInt2D(15, 37);
-                if(this.getPosition().equals( kettlePosition)){
-                //    System.out.println("not ok " + this.getPosition()); 
-                    furnitures.get(2).getFurniture3DModel().setColor(Color.GREEN.getRGB());
-                ubik.getBuilding().getFloor(floor).getHome().getRooms().get(3).setFloorColor(Color.LIGHT_GRAY.getRGB());
-                    String query = "insert into measure values(default,2," + furnitures.get(2).getFurniture3DModel().getName() + ",0,1,'" + dateTime + "');";
-                    System.out.println(query);
-                    database.executeUpdate(query);
-                    System.out.println("Kettle on");
-                } 
-                //CupBoard Position
-                MutableInt2D cupBoardPosition = new MutableInt2D(11,27);
-                if(this.getPosition().equals( cupBoardPosition)){
-                //    System.out.println("not ok " + this.getPosition()); 
-                    furnitures.get(33).getFurniture3DModel().setColor(Color.GREEN.getRGB());
-                    String query = "insert into measure values(default,2," + furnitures.get(33).getFurniture3DModel().getName() + ",0,1,'" + dateTime + "');";
-                    this.waitingTime(4000);
-                    furnitures.get(33).getFurniture3DModel().setColor(Color.YELLOW.getRGB());
-                    String query1 = "insert into measure values(default,2," + furnitures.get(33).getFurniture3DModel().getName() + ",1,0,'" + dateTime + "');";
-                    System.out.println(query);
-                    System.out.println(query1);
-                    database.executeUpdate(query);
-                    database.executeUpdate(query1);
-                    System.out.println(" Cupbaord on");
-                } 
-                
-                // Mug Kitchen
-                MutableInt2D mug = new MutableInt2D(11,37);
-                if(this.getPosition().equals( mug)){
-                //    System.out.println("not ok " + this.getPosition()); 
-                    //furnitures.get(3).getFurniture3DModel().setColor(Color.GREEN.getRGB());
-                    furnitures.get(22).getFurniture3DModel().setVisible(true);
-                    System.out.println(" mug on");
-                } 
-                // Mug Taken
-                MutableInt2D mugAgain = new MutableInt2D(14,37);
-                if(this.getPosition().equals( mugAgain)){
-                //    System.out.println("not ok " + this.getPosition()); 
-                    //furnitures.get(3).getFurniture3DModel().setColor(Color.GREEN.getRGB());
-                    furnitures.get(2).getFurniture3DModel().setColor(Color.lightGray.getRGB());
-                    String query = "insert into measure values(default,2," + furnitures.get(2).getFurniture3DModel().getName() + ",1,0,'" + dateTime + "');";
-                    System.out.println(query);
-                    database.executeUpdate(query);
-                    System.out.println("Kettle on");
-                    this.waitingTime(2000);
-                    furnitures.get(22).getFurniture3DModel().setVisible(false);
-                    System.out.println(" mug taken");
-                } 
-                // Front of the Milk
-                 MutableInt2D milk = new MutableInt2D(13,37);
-                if(this.getPosition().equals( milk)){
-                //    System.out.println("not ok " + this.getPosition()); 
-                    //furnitures.get(3).getFurniture3DModel().setColor(Color.GREEN.getRGB());
-                    furnitures.get(25).getFurniture3DModel().setVisible(true);
-                    this.waitingTime(2000);
-                    furnitures.get(25).getFurniture3DModel().setVisible(false);
-                    System.out.println(" Milk on");
-                } 
-                //Front of the Fridger
-                MutableInt2D frigo = new MutableInt2D(10,37);
-                if(this.getPosition().equals( frigo)){
-                //    System.out.println("not ok " + this.getPosition()); 
-                    //furnitures.get(3).getFurniture3DModel().setColor(Color.GREEN.getRGB());
-                    furnitures.get(21).getFurniture3DModel().setColor(Color.GREEN.getRGB());
-                    String query = "insert into measure values(default,2," + furnitures.get(21).getFurniture3DModel().getName() + ",0,1,'" + dateTime + "');";
-                    this.waitingTime(2000);
-                    furnitures.get(21).getFurniture3DModel().setColor(Color.RED.getRGB());
-                    String query1 = "insert into measure values(default,2," + furnitures.get(21).getFurniture3DModel().getName() + ",1,0,'" + dateTime + "');";
-                    System.out.println(query);
-                    System.out.println(query1);
-                    database.executeUpdate(query);
-                    database.executeUpdate(query1);
-                    System.out.println(" Fridge on");
-                }
-                
-                MutableInt2D frigoAgain = new MutableInt2D(9,37);
-                if(this.getPosition().equals( frigoAgain)){
-                //    System.out.println("not ok " + this.getPosition()); 
-                    //furnitures.get(3).getFurniture3DModel().setColor(Color.GREEN.getRGB());
-                    //furnitures.get(23).getFurniture3DModel().setVisible(false);
-                    furnitures.get(21).getFurniture3DModel().setColor(Color.GREEN.getRGB());
-                    String query = "insert into measure values(default,2," + furnitures.get(21).getFurniture3DModel().getName() + ",0,1,'" + dateTime + "');";
-                    this.waitingTime(2000);
-                    furnitures.get(21).getFurniture3DModel().setColor(Color.RED.getRGB());
-                    String query1 = "insert into measure values(default,2," + furnitures.get(21).getFurniture3DModel().getName() + ",1,0,'" + dateTime + "');";
-                    System.out.println(query);
-                    System.out.println(query1);
-                    database.executeUpdate(query);
-                    database.executeUpdate(query1);
-                    System.out.println(" Fridge again on");
-                }
-                
-                // Sitting on the Chair
-                 MutableInt2D  chair = new MutableInt2D(37,10);
-                if(this.getPosition().equals( chair)){
-                //    System.out.println("not ok " + this.getPosition()); 
-                    //furnitures.get(3).getFurniture3DModel().setColor(Color.GREEN.getRGB());
-                    this.person3DModel.setVisible(false);
-                    furnitures.get(23).getFurniture3DModel().setVisible(true);
-                    furnitures.get(24).getFurniture3DModel().setVisible(true);
-                    String query = "insert into measure values(default,2," + furnitures.get(3).getFurniture3DModel().getName() + ",1,0,'" + dateTime + "');";
-                    //String query1 = "insert into measure values(default,2," + furnitures.get(22).getFurniture3DModel().getName() + ",1,0,'" + dateTime + "');";
-                    System.out.println(query);
-                    //System.out.println(query1);
-                    database.executeUpdate(query);
-                    //database.executeUpdate(query1);
-                    System.out.println(" User Sitting on the chair");
-                    
-                    this.waitingTime(7000);
-                    furnitures.get(23).getFurniture3DModel().setVisible(false);
-                    this.person3DModel.setVisible(true);
-                    String query1 = "insert into measure values(default,2," + furnitures.get(3).getFurniture3DModel().getName() + ",1,0,'" + dateTime + "');";
-                    System.out.println(query1);
-                    //System.out.println(query1);
-                    database.executeUpdate(query1);
-                    //database.executeUpdate(query1);
-                    System.out.println(" User standing");
-                }
-                
-                MutableInt2D  clothing = new MutableInt2D(25,39);
-                if(this.getPosition().equals( clothing)){
-                //    System.out.println("not ok " + this.getPosition()); 
-                    //furnitures.get(3).getFurniture3DModel().setColor(Color.GREEN.getRGB());
-                    //this.person3DModel.setRol("Teacher");
-                    System.out.println(" User going out");
-                    this.stop();
-                } 
-                
-        
+              
 //                else{
 ////                    List<Furniture> furnitures = (List<Furniture>) ubik.getBuilding().getFloor(floor).getFurnitureHandler().getFurnitures();
 //                    
@@ -564,7 +475,7 @@ public class Worker extends Person{
         //Front of the Kattle
             List<Furniture> furnitures = (List<Furniture>) ubik.getBuilding().getFloor(floor).getFurnitureHandler().getFurnitures();
             for(int i=0;i<furnitures.size();i++){
-           //System.out.println(furnitures.get(i).getName() + " + " + "index# "+ i + "(" + furnitures.get(i).getCenter().x + "," + furnitures.get(i).getCenter().y +")");
+//           System.out.println(furnitures.get(i).getName() + " + " + "index# "+ i + "(" + furnitures.get(i).getCenter().x + "," + furnitures.get(i).getCenter().y +")");
 //            furnitures.get(i).getFurniture3DModel().setColor(Color.RED.getRGB());          
        }
             furnitures.get(0).getFurniture3DModel().setColor(Color.GREEN.getRGB());
@@ -575,32 +486,39 @@ public class Worker extends Person{
             this.waitingTime (500);
             furnitures.get(27).getFurniture3DModel().setVisible(false);
             this.person3DModel.setVisible(true);
+        
+            //Bedroom Switch
+            goals.add(new Int2D(31,15));
             
-            
-        
-        // Front of the Kattle
-        goals.add(new Int2D(15,37));
-        //Front of the Cupboard
-        goals.add(new Int2D(11,27));
-        //Front of the Mug
-        goals.add(new Int2D(11,37));
-        //Front of the Fridge
-        goals.add(new Int2D(10,37));
-        //Front of the Milk
-        goals.add(new Int2D(13,37));
-        //Front of the fridge again
-         goals.add(new Int2D(9,37));
-         //Front of the mug again
-        goals.add(new Int2D(14,37));
-        
-        
-//        goals.add(new Int2D(14,37));
+            //Kitchen Switch
+            goals.add(new Int2D(14,25));
+            //Corridor Switch
+            goals.add(new Int2D(27,25));
+            //Outside of the house
+            goals.add(new Int2D(27,44));
+//        // Front of the Kattle
+//        goals.add(new Int2D(15,37));
+//        //Front of the Cupboard
+//        goals.add(new Int2D(11,27));
+//        //Front of the Mug
+//        goals.add(new Int2D(11,37));
+//        //Front of the Fridge
 //        goals.add(new Int2D(10,37));
-////        Furniture Ft = (Furniture) ubik.getBuilding().getFloor(floor).getFurnitureHandler().getFurniture(10, 39);
-////        Ft.getFurniture3DModel().setColor(Color.GREEN.getRGB());
-////        Ft.getFurniture3DModel().setColor(Color.GRAY.getRGB());
-          goals.add(PositionTools.getRoom(this,rooms[1]).getCenter());
-          
+//        //Front of the Milk
+//        goals.add(new Int2D(13,37));
+//        //Front of the fridge again
+//         goals.add(new Int2D(9,37));
+//         //Front of the mug again
+//        goals.add(new Int2D(14,37));
+//        
+//        
+////        goals.add(new Int2D(14,37));
+////        goals.add(new Int2D(10,37));
+//////        Furniture Ft = (Furniture) ubik.getBuilding().getFloor(floor).getFurnitureHandler().getFurniture(10, 39);
+//////        Ft.getFurniture3DModel().setColor(Color.GREEN.getRGB());
+//////        Ft.getFurniture3DModel().setColor(Color.GRAY.getRGB());
+//          goals.add(PositionTools.getRoom(this,rooms[1]).getCenter());
+//          
 //        goals.add(new Int2D(14,37));
         //goals.add(new Int2D(37,10));
         //goals.add(PositionTools.getRoom(this,rooms[0]).getCenter());

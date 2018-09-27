@@ -77,7 +77,7 @@ public class SmartHomeSimWithGUI extends UbikSimWithUI {
         
         switch (demoCode) {//scenario depeding on demo code
             case 1:
-                smartHomeSim.setPathScenario("./environments/draft 5.ubiksim");
+                smartHomeSim.setPathScenario("./environments/outside.ubiksim");
                //smartHomeSim.setPathScenario("./environments/draft3.ubiksim");
                 //smartHomeSim.setPathScenario("./environments/draftTeacher.ubiksim");
                 break;
